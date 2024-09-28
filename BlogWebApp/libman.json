@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "provider": "unpkg",
+      "library": "jquery@3.5.1",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "tinymce@5.4.1",
+      "destination": "wwwroot/lib/tinymce/"
+    }
+  ]
+}

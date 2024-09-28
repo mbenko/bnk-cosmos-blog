@@ -1,0 +1,70 @@
+﻿@model BlogPostViewViewModel
+
+
+<div>
+    <h1 class="mt-5 h3">
+        @Model.Title
+        <span class="badge badge-pill badge-secondary">@Model.LikeCount Like@(Model.LikeCount == 1 ? "" : "s")</span>
+    </h1>
+
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        if (Model.UserLikedPost)
+        {
+            using (Html.BeginForm("PostUnlike", "BlogPost", new { postId = Model.PostId }))
+            {
+                <button class="btn btn-primary btn-sm">Unlike</button>
+            }
+        }
+        else
+        {
+            using (Html.BeginForm("PostLike", "BlogPost", new { postId = Model.PostId }))
+            {
+                <button class="btn btn-outline-primary btn-sm">Like</button>
+            }
+        }
+    }
+</div>
+
+@if (User.IsInRole("Admin"))
+{
+    <a href="/post/edit/@Model.PostId">edit</a>
+}
+<p>Written by: <a href="/user/@Model.AuthorId/posts">@Model.AuthorUsername</a></p>
+<p>
+    @Html.Raw(Model.Content)
+</p>
+
+
+@if (Model.Comments.Any())
+{
+    <h4 id="comments">Comments (@Model.Comments.Count)</h4>
+
+    @foreach (var comment in Model.Comments)
+    {
+        <div>
+            <span class="small">@comment.CommentDateCreated.ToShortDateString() @comment.CommentDateCreated.ToShortTimeString() - @comment.CommentAuthorUsername</span>
+            <p><i>@comment.CommentContent</i></p>
+        </div>
+    }
+}
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    using (Html.BeginForm("PostCommentNew", "BlogPost", new { postId = Model.PostId }))
+    {
+
+        <div class="form-group">
+            <label for="comment" class="h5">Add New Comment</label>
+            <textarea rows="5" class="form-control" id="comment" name="comment" style="resize:vertical;"></textarea>
+            <small id="commentHelp" class="form-text text-muted">You can add a comment to this blog post.</small>
+        </div>
+
+        <div>
+            <button class="btn btn-outline-dark">Save Comment</button>
+        </div>
+    }
+
+}

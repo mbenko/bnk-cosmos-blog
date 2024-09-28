@@ -1,0 +1,26 @@
+﻿@model BlogHomePageViewModel
+
+
+<h1>My Azure Cosmos DB Blog Sample Home Page</h1>
+
+
+@if (!Model.BlogPostsMostRecent.Any())
+{
+    <div class="alert alert-info">There are no posts in this blog.</div>
+}
+
+
+@foreach (var bp in Model.BlogPostsMostRecent)
+{
+    <h3 class="mt-5"><a class="text-dark" href="/post/@bp.PostId">@bp.Title</a></h3>
+    <a href="/post/@bp.PostId#comments" class="badge badge-pill badge-secondary">@bp.CommentCount Comment@(bp.CommentCount == 1 ? "" : "s")</a>
+    <a href="/post/@bp.PostId" class="badge badge-pill badge-secondary">@bp.LikeCount Like@(bp.LikeCount == 1 ? "" : "s")</a>
+    @if (User.IsInRole("Admin"))
+    {
+        <a href="/post/edit/@bp.PostId">edit</a>
+    }
+    <p>Written by: <a href="/user/@bp.AuthorId/posts">@bp.AuthorUsername</a></p>
+    <p>
+        @Html.Raw(bp.Content)
+    </p>
+}
