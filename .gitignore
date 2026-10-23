@@ -10,6 +10,8 @@
 *.userosscache
 *.sln.docstates
 appsettings.development.json
+# Local Azure Functions settings can contain credentials.
+BlogFunctionApp/local.settings.json
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

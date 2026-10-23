@@ -13,9 +13,16 @@ This repository contains sample code for the article [How to model and partition
 1. **Azure Storage Emulator** - More information on how to install and use Azure Storage Emulator can be found [here](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-emulator).
 
 
+## Runtime and browser dependencies
+Both projects currently target .NET Core 3.1. Building with a newer .NET SDK does not upgrade that target. Running the web app requires the .NET Core 3.1 and ASP.NET Core 3.1 runtimes; a separate 3.1 SDK is not needed when the installed SDK can build the solution.
+
+Library Manager restores jQuery 3.5.1 and TinyMCE 5.4.1 from jsDelivr during the web project build, using `BlogWebApp\libman.json`. No npm installation is required. If a restore fails, check access to `data.jsdelivr.com` and `cdn.jsdelivr.net`. TinyMCE remains served locally from `wwwroot/lib/tinymce`; the layout loads jQuery separately from `code.jquery.com`.
+
+These versions and .NET Core 3.1 are legacy dependencies. The provider change fixes asset retrieval, not security vulnerabilities. Keep this passwordless demo local and do not expose it publicly without upgrading and reviewing its security.
+
 ## Running this sample
 1. Clone this repository.
-1. From Visual Studio, open the **AzureCosmosDbBlogExample.sln** file from the root directory.
+1. From Visual Studio, open the **bnk-cosmos-blog.sln** file from the root directory.
 1. In Visual Studio Build menu, select Build Solution (or Press F6).
 1. Start Azure Storage Emulator.
 1. Start Azure Cosmos DB Emulator.
